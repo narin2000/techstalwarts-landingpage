@@ -4,9 +4,9 @@ import Typography from "../miuComponents/Typography";
 import Box from "../miuComponents/Box";
 import style from "../common/styled";
 
-const InfoCard = ({ imgSrc, label, title }) => {
+const InfoCard = ({ imgSrc, label, title, ...sx }) => {
   return (
-    <CardContainer>
+    <CardContainer sx={{ ...sx }}>
       {imgSrc && (
         <img src={imgSrc} alt={label || title} width={40} height={40} />
       )}

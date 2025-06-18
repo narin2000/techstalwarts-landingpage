@@ -4,10 +4,10 @@ import Typography from "../miuComponents/Typography";
 import Box from "../miuComponents/Box";
 import style from "../common/styled";
 import CarouselControls from "../common/CarouselControls";
-import InfoCard from "../common/Cards"; 
+import InfoCard from "../common/Cards";
 
-const Technologies = ({ techSlides }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+const Technologies = ({ techSlides, hiringCard }) => {
+    const [activeIndex, setActiveIndex] = useState(0);
   const total = techSlides?.length;
 
   const handlePrev = () => setActiveIndex((prev) => Math.max(prev - 1, 0));
@@ -52,21 +52,38 @@ const Technologies = ({ techSlides }) => {
         <LayoutWrapper>
           <Typography
             sx={{
-              fontSize: "20px",
+              fontSize: "26px",
               fontWeight: "700",
               color: "#ffffff",
               textAlign: "center",
-              padding: "20px 0",
+              padding: "40px 0",
             }}
           >
             Why Hire From Us?
           </Typography>
-          <CardsWrapper>
-            {/* Example use of InfoCard */}
-            <InfoCard imgSrc="/icons/star.svg" title="Skilled Engineers" />
-            <InfoCard imgSrc="/icons/clock.svg" title="Fast Turnaround" />
-            <InfoCard imgSrc="/icons/graph.svg" title="Scalable Solutions" />
-          </CardsWrapper>
+          <HireCardsWrapper>
+            {hiringCard?.map((card, idx) => (
+              <Box
+                key={idx}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  textAlign: "center",
+                }}
+              >
+                <Hireimg>
+                  <img
+                    src={card.src}
+                    alt={card.title || `hire-${idx}`}
+                    width="50px"
+                  />
+                </Hireimg>
+                <HireLabel>{card.label}</HireLabel>
+                <HireText>{card.title}</HireText>
+              </Box>
+            ))}
+          </HireCardsWrapper>
         </LayoutWrapper>
       </HireContainer>
     </SectionContainer>
@@ -141,6 +158,9 @@ const CardsWrapper = style(Box)(({ theme }) => ({
   gridTemplateColumns: "repeat(3, 1fr)",
   gap: "16px",
   justifyContent: "center",
+  [theme.breakpoints.down("lg")]: {
+    gridTemplateColumns: "repeat(2, 1fr)",
+  },
 
   [theme.breakpoints.down("md")]: {
     gridTemplateColumns: "repeat(2, 1fr)",
@@ -153,4 +173,47 @@ const CardsWrapper = style(Box)(({ theme }) => ({
 
 const HireContainer = style(Box)(({ theme }) => ({
   backgroundColor: "#34A6DE",
+  paddingBottom: "80px",
+}));
+const HireCardsWrapper = style(Box)(({ theme }) => ({
+  display: "grid",
+  gridTemplateColumns: "repeat(4, 1fr)",
+  gap: "16px",
+  justifyContent: "center",
+  [theme.breakpoints.down("lg")]: {
+    gridTemplateColumns: "repeat(2, 1fr)",
+  },
+
+  [theme.breakpoints.down("md")]: {
+    gridTemplateColumns: "repeat(2, 1fr)",
+  },
+
+  [theme.breakpoints.down("sm")]: {
+    gridTemplateColumns: "repeat(2, 1fr)",
+  },
+}));
+const Hireimg = style(Box)(({ theme }) => ({
+  textAlign: "center",
+  width: "100px",
+  height: "100px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: "#ffffff",
+  borderRadius: "50%",
+  marginBottom: " 20px",
+}));
+const HireLabel = style(Typography)(({ theme }) => ({
+  fontSize: "20px",
+  fontWeight: "700",
+  color: "#ffffff",
+  textAlign: "center",
+  marginBottom: "10px",
+}));
+const HireText = style(Typography)(({ theme }) => ({
+  fontSize: "14px",
+  fontWeight: "500",
+  color: "white",
+  textAlign: "center",
+  padding: "0px 30px",
 }));
